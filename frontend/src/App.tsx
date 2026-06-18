@@ -14,17 +14,14 @@ import ComplainSeller from "./pages/ComplainSeller";
 import ComplainProducts from "./pages/ComplainProducts";
 import Forbidden from "./pages/Forbidden";
 import NotFound from "./pages/NotFound";
+import type { AuthResponse } from "./types";
 
 axios.defaults.withCredentials = true;
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  role: string;
-}
+
+
 
 function App() {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<AuthResponse | null>(null);
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
   useEffect(() => {
@@ -35,13 +32,20 @@ function App() {
         setUser(response.data);
       } catch (error) {
         console.error("Error fetching user:", error);
+        setUser(null);
       }
     };
 
     fetchUser();
   }, [apiUrl]);
+
   const userRole = user?.user?.role;
-  const link = `/user/${userRole?.toLowerCase()}`;
+  const roleRoutes: Record<string, string> = {
+    SELLER: "/user/seller",
+    CONSUMER: "/user/consumer",
+  };
+
+  const link = userRole ? roleRoutes[userRole] : "/";
   return (
     <>
       <Navbar user={user} setUser={setUser} />

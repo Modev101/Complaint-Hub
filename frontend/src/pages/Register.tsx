@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, type Dispatch, type SetStateAction } from "react";
 import axios from "axios";
 
 import {
@@ -10,10 +10,15 @@ import {
 } from "../components/select";
 import { useNavigate } from "react-router-dom";
 import { Loader2 } from "lucide-react";
+import type { AuthResponse } from "@/App";
 
 type UserRole = "SELLER" | "CONSUMER";
 
-const Register = ({ setUser }) => {
+const Register = ({
+  setUser,
+}: {
+  setUser: Dispatch<SetStateAction<AuthResponse | null>>;
+}) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",

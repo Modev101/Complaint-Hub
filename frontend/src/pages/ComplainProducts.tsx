@@ -43,6 +43,7 @@ export default function ComplainProducts() {
   const [submitted, setSubmitted] = useState(false);
 
   const onSubmit = (data: FormData) => {
+    console.log(data);
     reset();
     setPreview(null);
 

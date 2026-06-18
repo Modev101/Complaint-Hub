@@ -46,6 +46,7 @@ export default function ComplainSeller() {
   });
 
   const onSubmit = (data: FormData) => {
+    console.log(data);
     reset();
     setSubmitted(true);
   };

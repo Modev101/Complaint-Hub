@@ -1,8 +1,9 @@
-import React from "react";
 import Footer from "../components/Footer";
 import FeatureCard from "../components/FeatureCard";
+import type { AuthResponse } from "@/App";
 
-const Home: React.FC = ({ user }) => {
+
+export default function Home({ user }: { user: AuthResponse | null }) {
   return (
     <div className="min-h-screen bg-gray-50">
       <FeatureCard user={user} />
@@ -10,6 +11,4 @@ const Home: React.FC = ({ user }) => {
       <Footer />
     </div>
   );
-};
-
-export default Home;
+}

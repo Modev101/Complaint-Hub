@@ -31,6 +31,7 @@ export default function ComplainProduct() {
     resolver: yupResolver(schema),
   });
   const onSubmit = (data: FormData) => {
+    console.log(data);
     reset();
     setSelectedCompany("");
 

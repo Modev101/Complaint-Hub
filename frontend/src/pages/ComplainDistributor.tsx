@@ -33,6 +33,7 @@ export default function ComplainDistributer() {
     resolver: yupResolver(schema),
   });
   const onSubmit = (data: FormData) => {
+    console.log(data);
     reset();
     setSubmitted(true);
   };

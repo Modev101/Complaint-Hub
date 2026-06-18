@@ -1,9 +1,14 @@
+import type { AuthResponse } from "@/App";
 import axios from "axios";
 import { Loader2 } from "lucide-react";
-import { useState } from "react";
+import { useState, type Dispatch, type SetStateAction } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function Login({ setUser }) {
+export default function Login({
+  setUser,
+}: {
+  setUser: Dispatch<SetStateAction<AuthResponse | null>>;
+}) {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -32,11 +37,9 @@ export default function Login({ setUser }) {
       setUser(data);
       navigate(data.user.role === "SELLER" ? "/user/seller" : "/user/consumer");
     } catch (error) {
-      // Optional: show server error message
-      if (error.response) {
-        setResError(error.response.data.message);
+      if (axios.isAxiosError(error)) {
+        setResError(error.response?.data?.message || "Request failed");
       }
-      console.error("Login failed:", error);
     } finally {
       setLoading(false);
     }
