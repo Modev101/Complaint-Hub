@@ -1,0 +1,92 @@
+[
+  {
+    "name": "The Coca-Cola Company",
+    "country": "United States",
+    "products": [
+      { "name": "Coca-Cola Classic", "category": "Soft Drink" },
+      { "name": "Sprite", "category": "Soft Drink" },
+      { "name": "Fanta Orange", "category": "Soft Drink" }
+    ]
+  },
+  {
+    "name": "PepsiCo",
+    "country": "United States",
+    "products": [
+      { "name": "Pepsi", "category": "Soft Drink" },
+      { "name": "7UP", "category": "Soft Drink" },
+      { "name": "Mountain Dew", "category": "Soft Drink" }
+    ]
+  },
+  {
+    "name": "Nestlé",
+    "country": "Switzerland",
+    "products": [
+      { "name": "Nescafé", "category": "Coffee" },
+      { "name": "KitKat", "category": "Chocolate Bar" },
+      { "name": "Nestlé Pure Life", "category": "Bottled Water" }
+    ]
+  },
+  {
+    "name": "Kraft Heinz",
+    "country": "United States",
+    "products": [
+      { "name": "Heinz Ketchup", "category": "Condiment" },
+      { "name": "Kraft Mac & Cheese", "category": "Pasta" },
+      { "name": "Philadelphia Cream Cheese", "category": "Dairy" }
+    ]
+  },
+  {
+    "name": "Unilever",
+    "country": "United Kingdom / Netherlands",
+    "products": [
+      { "name": "Magnum Ice Cream", "category": "Dessert" },
+      { "name": "Ben & Jerry's", "category": "Ice Cream" },
+      { "name": "Lipton Ice Tea", "category": "Beverage" }
+    ]
+  },
+  {
+    "name": "Mondelez International",
+    "country": "United States",
+    "products": [
+      { "name": "Oreo Cookies", "category": "Snack" },
+      { "name": "Cadbury Dairy Milk", "category": "Chocolate" },
+      { "name": "Toblerone", "category": "Chocolate" }
+    ]
+  },
+  {
+    "name": "Danone",
+    "country": "France",
+    "products": [
+      { "name": "Actimel Yogurt Drink", "category": "Dairy" },
+      { "name": "Activia Yogurt", "category": "Dairy" },
+      { "name": "Evian Water", "category": "Beverage" }
+    ]
+  },
+  {
+    "name": "General Mills",
+    "country": "United States",
+    "products": [
+      { "name": "Cheerios", "category": "Cereal" },
+      { "name": "Lucky Charms", "category": "Cereal" },
+      { "name": "Häagen-Dazs", "category": "Ice Cream" }
+    ]
+  },
+  {
+    "name": "Mars, Incorporated",
+    "country": "United States",
+    "products": [
+      { "name": "Snickers", "category": "Chocolate Bar" },
+      { "name": "M&M's", "category": "Chocolate Candy" },
+      { "name": "Twix", "category": "Chocolate Bar" }
+    ]
+  },
+  {
+    "name": "Kellogg's",
+    "country": "United States",
+    "products": [
+      { "name": "Corn Flakes", "category": "Cereal" },
+      { "name": "Frosted Flakes", "category": "Cereal" },
+      { "name": "Rice Krispies", "category": "Cereal" }
+    ]
+  }
+]

@@ -1,0 +1,264 @@
+{
+  "states": [
+    {
+      "name": "California",
+      "counties": [
+        {
+          "name": "Los Angeles County",
+          "towns": ["Los Angeles", "Beverly Hills", "Santa Monica"]
+        },
+        {
+          "name": "Orange County",
+          "towns": ["Anaheim", "Santa Ana", "Irvine"]
+        }
+      ]
+    },
+    {
+      "name": "Texas",
+      "counties": [
+        {
+          "name": "Harris County",
+          "towns": ["Houston", "Pasadena", "Baytown"]
+        },
+        {
+          "name": "Dallas County",
+          "towns": ["Dallas", "Irving", "Garland"]
+        }
+      ]
+    },
+    {
+      "name": "Florida",
+      "counties": [
+        {
+          "name": "Miami-Dade County",
+          "towns": ["Miami", "Hialeah", "Miami Beach"]
+        },
+        {
+          "name": "Orange County",
+          "towns": ["Orlando", "Kissimmee", "Winter Park"]
+        }
+      ]
+    },
+    {
+      "name": "New York",
+      "counties": [
+        {
+          "name": "Kings County",
+          "towns": ["Brooklyn", "Coney Island", "Bushwick"]
+        },
+        {
+          "name": "New York County",
+          "towns": ["Manhattan", "Harlem", "Upper East Side"]
+        }
+      ]
+    },
+    {
+      "name": "Illinois",
+      "counties": [
+        {
+          "name": "Cook County",
+          "towns": ["Chicago", "Evanston", "Cicero"]
+        },
+        {
+          "name": "DuPage County",
+          "towns": ["Naperville", "Wheaton", "Downers Grove"]
+        }
+      ]
+    },
+    {
+      "name": "Pennsylvania",
+      "counties": [
+        {
+          "name": "Philadelphia County",
+          "towns": ["Philadelphia", "Manayunk", "Chestnut Hill"]
+        },
+        {
+          "name": "Allegheny County",
+          "towns": ["Pittsburgh", "McKeesport", "Monroeville"]
+        }
+      ]
+    },
+    {
+      "name": "Ohio",
+      "counties": [
+        {
+          "name": "Cuyahoga County",
+          "towns": ["Cleveland", "Lakewood", "Parma"]
+        },
+        {
+          "name": "Franklin County",
+          "towns": ["Columbus", "Dublin", "Westerville"]
+        }
+      ]
+    },
+    {
+      "name": "Georgia",
+      "counties": [
+        {
+          "name": "Fulton County",
+          "towns": ["Atlanta", "Roswell", "Alpharetta"]
+        },
+        {
+          "name": "Cobb County",
+          "towns": ["Marietta", "Smyrna", "Kennesaw"]
+        }
+      ]
+    },
+    {
+      "name": "North Carolina",
+      "counties": [
+        {
+          "name": "Mecklenburg County",
+          "towns": ["Charlotte", "Matthews", "Pineville"]
+        },
+        {
+          "name": "Wake County",
+          "towns": ["Raleigh", "Cary", "Apex"]
+        }
+      ]
+    },
+    {
+      "name": "Michigan",
+      "counties": [
+        {
+          "name": "Wayne County",
+          "towns": ["Detroit", "Dearborn", "Livonia"]
+        },
+        {
+          "name": "Oakland County",
+          "towns": ["Troy", "Farmington Hills", "Pontiac"]
+        }
+      ]
+    },
+    {
+      "name": "New Jersey",
+      "counties": [
+        {
+          "name": "Bergen County",
+          "towns": ["Hackensack", "Fort Lee", "Paramus"]
+        },
+        {
+          "name": "Essex County",
+          "towns": ["Newark", "East Orange", "Bloomfield"]
+        }
+      ]
+    },
+    {
+      "name": "Virginia",
+      "counties": [
+        {
+          "name": "Fairfax County",
+          "towns": ["Fairfax", "Reston", "Herndon"]
+        },
+        {
+          "name": "Prince William County",
+          "towns": ["Woodbridge", "Manassas", "Dumfries"]
+        }
+      ]
+    },
+    {
+      "name": "Washington",
+      "counties": [
+        {
+          "name": "King County",
+          "towns": ["Seattle", "Bellevue", "Redmond"]
+        },
+        {
+          "name": "Pierce County",
+          "towns": ["Tacoma", "Puyallup", "Lakewood"]
+        }
+      ]
+    },
+    {
+      "name": "Arizona",
+      "counties": [
+        {
+          "name": "Maricopa County",
+          "towns": ["Phoenix", "Scottsdale", "Mesa"]
+        },
+        {
+          "name": "Pima County",
+          "towns": ["Tucson", "Oro Valley", "Marana"]
+        }
+      ]
+    },
+    {
+      "name": "Massachusetts",
+      "counties": [
+        {
+          "name": "Suffolk County",
+          "towns": ["Boston", "Chelsea", "Revere"]
+        },
+        {
+          "name": "Middlesex County",
+          "towns": ["Cambridge", "Lowell", "Newton"]
+        }
+      ]
+    },
+    {
+      "name": "Tennessee",
+      "counties": [
+        {
+          "name": "Davidson County",
+          "towns": ["Nashville", "Belle Meade", "Forest Hills"]
+        },
+        {
+          "name": "Shelby County",
+          "towns": ["Memphis", "Bartlett", "Germantown"]
+        }
+      ]
+    },
+    {
+      "name": "Indiana",
+      "counties": [
+        {
+          "name": "Marion County",
+          "towns": ["Indianapolis", "Speedway", "Lawrence"]
+        },
+        {
+          "name": "Lake County",
+          "towns": ["Gary", "Hammond", "East Chicago"]
+        }
+      ]
+    },
+    {
+      "name": "Missouri",
+      "counties": [
+        {
+          "name": "St. Louis County",
+          "towns": ["Clayton", "Florissant", "Chesterfield"]
+        },
+        {
+          "name": "Jackson County",
+          "towns": ["Kansas City", "Independence", "Lee's Summit"]
+        }
+      ]
+    },
+    {
+      "name": "Colorado",
+      "counties": [
+        {
+          "name": "Denver County",
+          "towns": ["Denver", "Globeville", "Montbello"]
+        },
+        {
+          "name": "El Paso County",
+          "towns": ["Colorado Springs", "Fountain", "Monument"]
+        }
+      ]
+    },
+    {
+      "name": "Maryland",
+      "counties": [
+        {
+          "name": "Montgomery County",
+          "towns": ["Rockville", "Gaithersburg", "Bethesda"]
+        },
+        {
+          "name": "Prince George's County",
+          "towns": ["Bowie", "Laurel", "Hyattsville"]
+        }
+      ]
+    }
+  ]
+}
