@@ -1,6 +1,6 @@
 export type Role = "SELLER" | "CONSUMER";
 
-export interface AuthUser {
+export type AuthUser = {
   id: string;
-  role: Role;
-}
+  email: string;
+};
