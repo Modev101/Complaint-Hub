@@ -1,5 +1,5 @@
-import { Request, Response, NextFunction } from "express";
-import { Role } from "../types/auth.ts";
+import type { Request, Response, NextFunction } from "express";
+import type { Role } from "../types/auth.ts";
 
 export const authorizeRoles = (...roles: Role[]) => {
   return (req: Request, res: Response, next: NextFunction) => {

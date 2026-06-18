@@ -5,7 +5,7 @@ import { signToken } from "../utils/jwt.ts";
 import { authenticateToken } from "../middleware/authToken.ts";
 import { authorizeRoles } from "../middleware/authRoles.ts";
 import { cookieOptions } from "../config/cookies.ts";
-import { Role } from "../types/auth.ts";
+import type { Role } from "../types/auth.ts";
 
 const router = express.Router();
 
