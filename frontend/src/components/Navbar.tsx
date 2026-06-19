@@ -1,7 +1,15 @@
+import type { AuthResponse } from "../types/index.ts";
 import axios from "axios";
+import type { Dispatch, SetStateAction } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function Navbar({ user, setUser }) {
+export default function Navbar({
+  user,
+  setUser,
+}: {
+  user: AuthResponse | null;
+  setUser: Dispatch<SetStateAction<AuthResponse | null>>;
+}) {
   const navigate = useNavigate();
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
   const handleLogout = async () => {

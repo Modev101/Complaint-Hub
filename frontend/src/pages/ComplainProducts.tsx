@@ -9,17 +9,21 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-const schema = yup.object({
-  company: yup.string().required(),
-  product: yup.string().required(),
-  state: yup.string().required(),
-  county: yup.string().required(),
-  town: yup.string().required(),
-  complain: yup.string().required().min(20),
-  productImage: yup
-    .mixed<FileList>()
-    .test("required", "Image is required", (value) => !!value?.length),
-});
+const schema = yup
+  .object({
+    company: yup.string().required(),
+    product: yup.string().required(),
+    state: yup.string().required(),
+    county: yup.string().required(),
+    town: yup.string().required(),
+    complain: yup.string().required().min(20),
+
+    productImage: yup
+      .mixed<FileList>()
+      .required("Image is required")
+      .test("fileExists", "Image is required", (value) => !!value?.length),
+  })
+  .required();
 
 type FormData = yup.InferType<typeof schema>;
 

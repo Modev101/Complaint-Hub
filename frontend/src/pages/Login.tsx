@@ -1,4 +1,4 @@
-import type { AuthResponse } from "@/App";
+import type { AuthResponse } from "../types/index.ts";
 import axios from "axios";
 import { Loader2 } from "lucide-react";
 import { useState, type Dispatch, type SetStateAction } from "react";

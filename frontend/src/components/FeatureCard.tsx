@@ -1,7 +1,8 @@
+import type { AuthResponse } from "../types/index.ts";
 import { AlertTriangle, ShieldCheck, Users, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
-export default function FeatureCard({ user }) {
+export default function FeatureCard({ user }: { user: AuthResponse | null }) {
   return (
     <>
       <section className="max-w-7xl mx-auto px-6 py-20 flex flex-col lg:flex-row items-center">

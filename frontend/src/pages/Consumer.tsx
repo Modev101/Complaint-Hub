@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBoxOpen, faStore } from "@fortawesome/free-solid-svg-icons";
 import "../App.css";
-import type { AuthResponse } from "@/App";
+import type { AuthResponse } from "../types/index.ts";
 
-export default function Consumer({ user } : { user: AuthResponse | null }) {
+export default function Consumer({ user }: { user: AuthResponse | null }) {
   const username = String(user?.user?.name);
 
   const capitalizedUsername =

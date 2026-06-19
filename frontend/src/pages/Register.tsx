@@ -10,7 +10,7 @@ import {
 } from "../components/select";
 import { useNavigate } from "react-router-dom";
 import { Loader2 } from "lucide-react";
-import type { AuthResponse } from "@/App";
+import type { AuthResponse } from "../types/index.ts";
 
 type UserRole = "SELLER" | "CONSUMER";
 

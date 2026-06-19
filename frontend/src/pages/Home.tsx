@@ -1,6 +1,6 @@
 import Footer from "../components/Footer";
 import FeatureCard from "../components/FeatureCard";
-import type { AuthResponse } from "@/App";
+import type { AuthResponse } from "../types/index.ts";
 
 
 export default function Home({ user }: { user: AuthResponse | null }) {
