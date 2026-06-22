@@ -1,31 +1,66 @@
 import React, { useState, type Dispatch, type SetStateAction } from "react";
 import axios from "axios";
-
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../components/select";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import type { AuthResponse } from "../types/index.ts";
+import * as yup from "yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import States from "../../data/States.json";
+import { SelectForm } from "../components/SelectForm";
 
-type UserRole = "SELLER" | "CONSUMER";
+const schema = yup
+  .object({
+    state: yup.string().required(),
+    county: yup.string().required(),
+    town: yup.string().required(),
+    storeName: yup
+      .string()
+      .required("Store Name is required")
+      .min(2, "Store Name must be at least 2 characters"),
 
-const Register = ({
+    phoneNumber: yup
+      .string()
+      .required("Phone number is required")
+      .matches(
+        /^(\+1\s?)?(\([2-9]\d{2}\)|[2-9]\d{2})[-.\s]?\d{3}[-.\s]?\d{4}$/,
+        "Enter a valid US phone number",
+      ),
+  })
+  .required();
+interface Duration {
+  value: string;
+  label: string;
+}
+interface Duration {
+  value: string;
+  label: string;
+}
+
+const DISTRIBUTER: Duration[] = [
+  { value: "ws", label: "Wholesaler" },
+  { value: "dst", label: "Distributer" },
+  { value: "oth", label: "Other" },
+];
+type FormData = yup.InferType<typeof schema>;
+export default function Register({
   setUser,
 }: {
   setUser: Dispatch<SetStateAction<AuthResponse | null>>;
-}) => {
+}) {
   const [formData, setFormData] = useState({
-    name: "",
+    storeName: "",
     email: "",
     password: "",
-    role: "CONSUMER" as UserRole,
+    role: "",
   });
-
+  const {
+    register,
+    setValue,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: yupResolver(schema),
+  });
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
@@ -34,6 +69,49 @@ const Register = ({
       [e.target.name]: e.target.value,
     });
   };
+  const [selectedState, setSelectedState] = useState("");
+  const [selectedCounty, setSelectedCounty] = useState("");
+  const [selectedTown, setSelectedTown] = useState("");
+  const [distributer, setDistributer] = useState<string>("");
+
+  const stateOptions = States.states.map((state) => ({
+    label: state.name,
+    value: state.name,
+  }));
+
+  const selectedStateData = States.states.find(
+    (state) => state.name === selectedState,
+  );
+
+  const countyOptions = selectedStateData
+    ? selectedStateData.counties.map((county) => ({
+        label: county.name,
+        value: county.name,
+      }))
+    : [];
+
+  const selectedCountyData = selectedStateData?.counties.find(
+    (county) => county.name === selectedCounty,
+  );
+
+  const townOptions = selectedCountyData
+    ? selectedCountyData.towns.map((town) => ({
+        label: town,
+        value: town,
+      }))
+    : [];
+
+  const handleStateChange = (value: string) => {
+    setSelectedState(value);
+    setSelectedCounty("");
+    setSelectedTown("");
+  };
+
+  const handleCountyChange = (value: string) => {
+    setSelectedCounty(value);
+    setSelectedTown("");
+  };
+
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -50,7 +128,7 @@ const Register = ({
 
       setUser(data);
 
-      navigate(data.user.role === "SELLER" ? "/user/seller" : "/user/consumer");
+      navigate("/user/seller/complaints");
     } catch (error) {
       console.error("Login failed:", error);
     } finally {
@@ -79,119 +157,133 @@ const Register = ({
               </p>
 
               <form onSubmit={handleSubmit} className="space-y-5">
-                {/* Full Name */}
                 <div>
                   <label
-                    htmlFor="name"
+                    htmlFor="storeName"
                     className="block mb-2 font-medium cursor-pointer"
                   >
-                    Name <span className="text-red-500">*</span>
+                    Store Name <span className="text-red-500">*</span>
                   </label>
 
                   <input
-                    id="name"
+                    id="storeName"
                     type="text"
-                    name="name"
-                    placeholder="John Doe"
-                    value={formData.name}
+                    name="storeName"
+                    placeholder="Enter your store name"
+                    value={formData.storeName}
                     onChange={handleChange}
                     required
                     className="w-full border rounded-lg px-4 py-1 focus:ring-2 focus:ring-red-500 outline-none"
                   />
                 </div>
 
-                {/* Email */}
                 <div>
                   <label
-                    htmlFor="email"
-                    className="block mb-2 font-medium cursor-pointer"
+                    htmlFor="phoneNumber"
+                    className="font-medium cursor-pointer"
                   >
-                    Email <span className="text-red-500">*</span>
+                    Phone Number <span className="text-red-500">*</span>
                   </label>
 
                   <input
-                    id="email"
-                    type="email"
-                    name="email"
-                    placeholder="john@example.com"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    className="w-full border rounded-lg px-4 py-1 focus:ring-2 focus:ring-red-500 outline-none"
+                    {...register("phoneNumber")}
+                    id="phoneNumber"
+                    type="tel"
+                    name="phoneNumber"
+                    placeholder="Enter your phone number"
+                    className="w-full mt-2 border rounded-lg px-4 py-3 outline-none focus:ring-2 focus:ring-red-500 no-spinner"
                   />
+                  <p className="text-red-500 text-sm">
+                    {errors.phoneNumber?.message}
+                  </p>
                 </div>
 
-                {/* Password */}
+                <label className="font-medium">
+                  State <span className="text-red-500">*</span>
+                </label>
                 <div>
-                  <label
-                    htmlFor="password"
-                    className="block mb-2 font-medium cursor-pointer"
-                  >
-                    Password <span className="text-red-500">*</span>
-                  </label>
+                  <SelectForm
+                    options={stateOptions}
+                    value={selectedState}
+                    onValueChange={(value) => {
+                      handleStateChange(value);
 
-                  <input
-                    id="password"
-                    type="password"
-                    name="password"
-                    placeholder="********"
-                    value={formData.password}
-                    onChange={handleChange}
-                    required
-                    className="w-full border rounded-lg px-4 py-1 focus:ring-2 focus:ring-red-500 outline-none"
+                      setValue("state", value, {
+                        shouldValidate: true,
+                      });
+
+                      setValue("county", "");
+                      setValue("town", "");
+                    }}
                   />
+                  <p className="text-red-500 text-sm">
+                    {errors.state?.message}
+                  </p>
                 </div>
-
-                {/* Role */}
+                <label className="font-medium">
+                  County <span className="text-red-500">*</span>
+                </label>
                 <div>
-                  <label className="block mb-2 font-medium cursor-pointer">
-                    Register As <span className="text-red-500">*</span>
-                  </label>
+                  <SelectForm
+                    options={countyOptions}
+                    value={selectedCounty}
+                    onValueChange={(value) => {
+                      handleCountyChange(value);
 
-                  <Select
-                    value={formData.role}
-                    onValueChange={(value) =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        role: value as UserRole,
-                      }))
-                    }
-                  >
-                    <SelectTrigger className="w-full py-3 focus:ring-2 focus:ring-red-500 outline-none cursor-pointer">
-                      <SelectValue placeholder="Select role" />
-                    </SelectTrigger>
+                      setValue("county", value, {
+                        shouldValidate: true,
+                      });
 
-                    <SelectContent>
-                      <SelectItem value="CONSUMER">CONSUMER</SelectItem>
-                      <SelectItem value="SELLER">SELLER</SelectItem>
-                    </SelectContent>
-                  </Select>
+                      setValue("town", "");
+                    }}
+                  />
+                  <p className="text-red-500 text-sm">
+                    {errors.county?.message}
+                  </p>
                 </div>
-
-                {/* Button */}
-                <button
-                  type="submit"
-                  className="w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-400 transition font-semibold cursor-pointer"
-                >
-                  Register
-                </button>
+                <label className="font-medium">
+                  Town <span className="text-red-500">*</span>
+                </label>
+                <div>
+                  <SelectForm
+                    options={townOptions}
+                    value={selectedTown}
+                    onValueChange={(value) => {
+                      setSelectedTown(value);
+                      setValue("town", value, { shouldValidate: true });
+                    }}
+                  />
+                  <p className="text-red-500 text-sm">{errors.town?.message}</p>
+                </div>
+                <label className="font-medium">
+                  Your Platform <span className="text-red-500">*</span>
+                </label>
+                <SelectForm
+                  options={DISTRIBUTER}
+                  value={distributer}
+                  onValueChange={(value) => {
+                    setDistributer(value);
+                  }}
+                />
+                <div className="flex items-center justify-center gap-4 pt-2">
+                  <Link
+                    to="/"
+                    className="border-gray-300 border px-6 py-3 rounded-lg flex items-center gap-2  hover:opacity-70 transition"
+                  >
+                    Cancel
+                  </Link>
+                  <button
+                    type="submit"
+                    className="bg-red-700 cursor-pointer hover:bg-red-800 disabled:opacity-60 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-lg px-6 py-3 transition-colors"
+                  >
+                    Sign up
+                  </button>
+                </div>
               </form>
-
-              <p className="text-center text-gray-500 mt-6">
-                Already have an account?
-                <a
-                  href="/login"
-                  className="text-red-600 font-semibold ml-2 hover:underline"
-                >
-                  Login
-                </a>
-              </p>
             </div>
           </div>
         </>
       )}
     </>
   );
-};
-
-export default Register;
+}

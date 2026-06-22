@@ -1,16 +1,12 @@
-import type { AuthResponse } from "../types/index.ts";
 import axios from "axios";
-import { Loader2 } from "lucide-react";
-import { useState, type Dispatch, type SetStateAction } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Loader2, ShieldAlertIcon } from "lucide-react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-export default function Login({
-  setUser,
-}: {
-  setUser: Dispatch<SetStateAction<AuthResponse | null>>;
-}) {
+export default function LoginAdmin() {
   const [formData, setFormData] = useState({
-    code: "",
+    email: "",
+    password: "",
   });
   const navigate = useNavigate();
 
@@ -32,9 +28,11 @@ export default function Login({
     setLoading(true);
 
     try {
-      const { data } = await axios.post(`${apiUrl}/api/auth/login`, formData);
-      setUser(data);
-      navigate("/user/seller/complaints");
+      const { data } = await axios.post(
+        `${apiUrl}/api/auth/admin/login`,
+        formData,
+      );
+      navigate("/admin/dashboard");
     } catch (error) {
       if (axios.isAxiosError(error)) {
         setResError(error.response?.data?.message || "Request failed");
@@ -56,23 +54,47 @@ export default function Login({
         <>
           <div className="lg:h-[80vh] my-5 flex items-center justify-center px-5">
             <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-8">
-              <p className="text-center text-gray-500 mb-8">
-                Login to your account
-              </p>
-
+              <div className="flex flex-col items-center justify-center space-y-4">
+                <ShieldAlertIcon className="text-red-500 size-10" />
+                <p className="text-center text-gray-500 mb-8">Admin Login</p>
+              </div>
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
-                  <label htmlFor="code" className="font-medium cursor-pointer">
-                    Code <span className="text-red-500">*</span>
+                  <label htmlFor="email" className="font-medium cursor-pointer">
+                    Email <span className="text-red-500">*</span>
                   </label>
 
                   <input
-                    id="code"
-                    type="text"
-                    name="code"
-                    placeholder="Enter your code"
+                    id="email"
+                    type="email"
+                    name="email"
+                    placeholder="Enter your email"
                     className="w-full mt-2 border rounded-lg px-4 py-3 outline-none focus:ring-2 focus:ring-red-500"
-                    value={formData.code}
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                  />
+                  {resError && (
+                    <p className="pl-4 italic text-sm text-red-500 font-semibold">
+                      {resError}
+                    </p>
+                  )}
+                </div>
+                <div>
+                  <label
+                    htmlFor="password"
+                    className="font-medium cursor-pointer"
+                  >
+                    Password <span className="text-red-500">*</span>
+                  </label>
+
+                  <input
+                    id="password"
+                    type="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    className="w-full mt-2 border rounded-lg px-4 py-3 outline-none focus:ring-2 focus:ring-red-500"
+                    value={formData.password}
                     onChange={handleChange}
                     required
                   />
@@ -90,16 +112,6 @@ export default function Login({
                   Login
                 </button>
               </form>
-
-              <p className="text-center mt-6 text-gray-600">
-                Don't have an account?{" "}
-                <Link
-                  to="/register"
-                  className="text-red-600 font-semibold hover:underline"
-                >
-                  Register
-                </Link>
-              </p>
             </div>
           </div>
         </>

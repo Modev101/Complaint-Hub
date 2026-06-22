@@ -1,107 +1,103 @@
 import { Navigate, Route, Routes } from "react-router-dom";
+import type { ReactNode } from "react";
 import "./App.css";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Navbar from "./components/Navbar";
-import { useEffect, useState } from "react";
 import axios from "axios";
-import Seller from "./pages/Seller";
-import Consumer from "./pages/Consumer";
-import ComplainDistributor from "./pages/ComplainDistributor";
-import ComplainProduct from "./pages/ComplainProduct";
-import ComplainSeller from "./pages/ComplainSeller";
-import ComplainProducts from "./pages/ComplainProducts";
-import Forbidden from "./pages/Forbidden";
 import NotFound from "./pages/NotFound";
-import type { AuthResponse } from "./types";
+import ComplainConsumer from "./pages/ComplainConsumer";
+import ComplainSeller from "./pages/ComplainSeller";
+import { AuthProvider } from "../context/AuthProvider";
+import { useAuth } from "../context/useAuth";
+import LoginAdmin from "./pages/LoginAdmin";
+import Dashboard from "./pages/Dashboard";
+import ConsumerDashboardComplaints from "./pages/ConsumerDashboardComplaints";
+import SellerDashboardComplaints from "./pages/SellerDashboardComplaints";
 
 axios.defaults.withCredentials = true;
 
-function App() {
-  const [user, setUser] = useState<AuthResponse | null>(null);
-  const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+// Only renders its children if NO seller is logged in.
+function RequireGuest({ children }: { children: ReactNode }) {
+  const { user } = useAuth();
+  if (user) return <Navigate to="/" replace />;
+  return <>{children}</>;
+}
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await axios.get(`${apiUrl}/api/auth/me`);
+// Only renders its children if a seller IS logged in.
+function RequireSeller({ children }: { children: ReactNode }) {
+  const { user } = useAuth();
+  if (!user) return <Navigate to="/login" replace />;
+  return <>{children}</>;
+}
 
-        setUser(response.data);
-      } catch (error) {
-        console.error("Error fetching user:", error);
-        setUser(null);
-      }
-    };
+function AppRoutes() {
+  const { setUser, authChecked } = useAuth();
 
-    fetchUser();
-  }, [apiUrl]);
+  // Wait for the /me check before rendering route-guarded pages,
+  // otherwise every visitor briefly gets treated as logged out.
+  if (!authChecked) {
+    return null; // or a spinner/skeleton if you'd like one
+  }
 
-  const userRole = user?.user?.role;
-  const roleRoutes: Record<string, string> = {
-    SELLER: "/user/seller",
-    CONSUMER: "/user/consumer",
-  };
-
-  const link = userRole ? roleRoutes[userRole] : "/";
   return (
     <>
-      <Navbar user={user} setUser={setUser} />
+      <Navbar />
       <Routes>
-        <Route path="/" element={<Home user={user} />} />
+        <Route path="/" element={<Home />} />
+
         <Route
           path="/login"
           element={
-            userRole ? (
-              <Navigate to={link} replace />
-            ) : (
+            <RequireGuest>
               <Login setUser={setUser} />
-            )
+            </RequireGuest>
           }
         />
         <Route
           path="/register"
           element={
-            userRole ? (
-              <Navigate to={link} replace />
-            ) : (
+            <RequireGuest>
               <Register setUser={setUser} />
-            )
+            </RequireGuest>
           }
         />
 
         <Route
-          path="/user/seller"
+          path="/user/seller/complaints"
           element={
-            userRole === "SELLER" ? <Seller user={user} /> : <Forbidden />
+            <RequireSeller>
+              <ComplainSeller />
+            </RequireSeller>
           }
         />
 
         <Route
-          path="/user/consumer"
-          element={
-            userRole === "CONSUMER" ? <Consumer user={user} /> : <Forbidden />
-          }
+          path="/user/consumer/complaints"
+          element={<ComplainConsumer />}
+        />
+        <Route path="/admin/login" element={<LoginAdmin />} />
+        <Route path="/admin/dashboard" element={<Dashboard />} />
+        <Route
+          path="/seller/complaints"
+          element={<SellerDashboardComplaints />}
         />
         <Route
-          path="/user/seller/complaints/product"
-          element={<ComplainProduct />}
-        />
-        <Route
-          path="/user/seller/complaints/distributor"
-          element={<ComplainDistributor />}
-        />
-        <Route
-          path="/user/consumer/complaints/seller"
-          element={<ComplainSeller />}
-        />
-        <Route
-          path="/user/consumer/complaints/product"
-          element={<ComplainProducts />}
+          path="/consumer/complaints"
+          element={<ConsumerDashboardComplaints />}
         />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>
+  );
+}
+
+function App() {
+  return (
+    <AuthProvider>
+      <AppRoutes />
+    </AuthProvider>
   );
 }
 
