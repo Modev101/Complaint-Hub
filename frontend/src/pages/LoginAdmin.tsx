@@ -28,10 +28,7 @@ export default function LoginAdmin() {
     setLoading(true);
 
     try {
-      const { data } = await axios.post(
-        `${apiUrl}/api/auth/admin/login`,
-        formData,
-      );
+      await axios.post(`${apiUrl}/api/auth/admin/login`, formData);
       navigate("/admin/dashboard");
     } catch (error) {
       if (axios.isAxiosError(error)) {
