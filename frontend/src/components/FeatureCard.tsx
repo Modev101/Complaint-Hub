@@ -4,7 +4,7 @@ import { useAuth } from "../../context/useAuth";
 
 export default function FeatureCard() {
   const [clicked, setClicked] = useState(false);
-  const { user } = useAuth();
+  const { userCode } = useAuth();
 
   return (
     <>
@@ -35,7 +35,7 @@ export default function FeatureCard() {
               {clicked && (
                 <>
                   <Link
-                    to={user ? "/user/seller/complaints" : "/login"}
+                    to={userCode ? "/user/seller/complaints" : "/login"}
                     className="border-gray-300 border px-6 py-3 rounded-lg flex items-center gap-2 hover:bg-red-600 hover:text-white transition"
                   >
                     Seller

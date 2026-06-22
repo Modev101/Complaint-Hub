@@ -1,3 +1,4 @@
+import { useAuth } from "../../context/useAuth.ts";
 import type { AuthResponse } from "../types/index.ts";
 import axios from "axios";
 import { Loader2 } from "lucide-react";
@@ -22,7 +23,7 @@ export default function Login({
       [e.target.name]: e.target.value,
     });
   };
-
+  const { setUserCode } = useAuth();
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
   const [loading, setLoading] = useState(false);
   const [resError, setResError] = useState(false);
@@ -33,7 +34,8 @@ export default function Login({
 
     try {
       const { data } = await axios.post(`${apiUrl}/api/auth/login`, formData);
-      setUser(data);
+      setUser(data.user);
+      setUserCode(data.user.code);
       navigate("/user/seller/complaints");
     } catch (error) {
       if (axios.isAxiosError(error)) {

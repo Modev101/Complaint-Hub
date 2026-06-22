@@ -21,14 +21,14 @@ axios.defaults.withCredentials = true;
 // Only renders its children if NO seller is logged in.
 function RequireGuest({ children }: { children: ReactNode }) {
   const { user } = useAuth();
-  if (user) return <Navigate to="/" replace />;
+  if (!user) return <Navigate to="/login" replace />;
   return <>{children}</>;
 }
 
 // Only renders its children if a seller IS logged in.
 function RequireSeller({ children }: { children: ReactNode }) {
-  const { user } = useAuth();
-  if (!user) return <Navigate to="/login" replace />;
+  const { userCode } = useAuth();
+  if (!userCode) return <Navigate to="/login" replace />;
   return <>{children}</>;
 }
 
@@ -59,7 +59,7 @@ function AppRoutes() {
           path="/register"
           element={
             <RequireGuest>
-              <Register setUser={setUser} />
+              <Register />
             </RequireGuest>
           }
         />

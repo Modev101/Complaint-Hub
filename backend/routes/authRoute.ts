@@ -120,6 +120,7 @@ router.post("/login", async (req, res) => {
       id: user.id,
       storeName: user.storeName,
       phoneNumber: user.phoneNumber,
+      code: user.code,
     };
 
     const token = signToken({
@@ -413,6 +414,7 @@ router.get("/me", authenticateToken, async (req: any, res) => {
         county: true,
         town: true,
         platform: true,
+        code: true,
       },
     });
 

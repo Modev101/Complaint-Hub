@@ -8,16 +8,18 @@ const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<AuthResponse | null>(null);
   const [authChecked, setAuthChecked] = useState(false);
+  const [userCode, setUserCode] = useState<string | null>(null); // ← add this
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const response = await axios.get(`${apiUrl}/api/auth/me`);
-
-        setUser(response.data);
+        setUser(response.data.user);
+        setUserCode(response.data.user.code ?? null); // ← restore code if already logged in
       } catch (error) {
         console.error("Error fetching user:", error);
         setUser(null);
+        setUserCode(null);
       } finally {
         setAuthChecked(true);
       }
@@ -27,7 +29,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, setUser, authChecked }}>
+    <AuthContext.Provider
+      value={{ user, setUser, authChecked, userCode, setUserCode }}
+    >
       {children}
     </AuthContext.Provider>
   );
