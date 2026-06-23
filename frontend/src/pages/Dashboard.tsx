@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 export default function Dashboard() {
   return (
     <>
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 content-center items-center justify-center min-h-[60vh] mb-10 lg:mb-0 md:mb-0">
+      <div className="grid grid-cols-1 gap-6 mt-10 md:grid-cols-2 content-center items-center justify-center min-h-[60vh] mb-10 lg:mb-0 md:mb-0">
         <Link
           to="/seller/complaints"
           className="rounded-xl border text-center border-gray-200 bg-red-100 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"

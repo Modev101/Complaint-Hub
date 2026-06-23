@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useAuth } from "../../context/useAuth";
 import { Loader2, ShieldAlertIcon } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -22,13 +23,25 @@ export default function LoginAdmin() {
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
   const [loading, setLoading] = useState(false);
   const [resError, setResError] = useState(false);
+
+  const { setAdmin } = useAuth();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     setLoading(true);
 
     try {
-      await axios.post(`${apiUrl}/api/auth/admin/login`, formData);
+      const { data } = await axios.post(
+        `${apiUrl}/api/auth/admin/login`,
+        formData,
+        {
+          withCredentials: true,
+        },
+      );
+
+      setAdmin(data.user);
+
       navigate("/admin/dashboard");
     } catch (error) {
       if (axios.isAxiosError(error)) {

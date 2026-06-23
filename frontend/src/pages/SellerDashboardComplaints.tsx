@@ -49,10 +49,10 @@ export default function ConsumerDashboardComplaints() {
     <>
       <div className="flex items-center justify-center space-x-4 my-5">
         <Link to="/admin/dashboard">
-          <ArrowLeft className="animate-bounce size-10" />
+          <ArrowLeft className="animate-bounce lg:size-10 md:size-10" />
         </Link>
 
-        <h1 className="text-red-600 text-4xl font-semibold">
+        <h1 className="text-red-600 lg:text-4xl md:text-4xl font-semibold">
           Seller Dashboard Complaints
         </h1>
       </div>
@@ -71,7 +71,9 @@ export default function ConsumerDashboardComplaints() {
             key={complaint.id}
             className="border p-4 rounded mb-4 flex flex-col items-center justify-center"
           >
-            <h2>{complaint.user.storeName}</h2>
+            <h2>
+              <strong>Store Name:</strong> {complaint.user.storeName}
+            </h2>
 
             <p>
               <strong>Phone:</strong> {complaint.user.phoneNumber}
@@ -93,13 +95,22 @@ export default function ConsumerDashboardComplaints() {
               <strong>Platform:</strong> {complaint.user.platform}
             </p>
 
-            <p>
-              <strong>Issues:</strong> {complaint.issues.join(", ")}
-            </p>
-
-            <p>
-              <strong>Products:</strong> {complaint.products.join(", ")}
-            </p>
+            <div>
+              <strong>Issues:</strong>
+              <ol>
+                {complaint.issues.map((issue, index) => (
+                  <li key={index}>{issue}</li>
+                ))}
+              </ol>
+            </div>
+            <div>
+              <strong>Products:</strong>
+              <ol>
+                {complaint.products.map((product, index) => (
+                  <li key={index}>{product}</li>
+                ))}
+              </ol>
+            </div>
 
             <p>
               <strong>Distributor:</strong> {complaint.distributor}
@@ -110,7 +121,8 @@ export default function ConsumerDashboardComplaints() {
             </p>
 
             <p>
-              <strong>Details:</strong> {complaint.details || "None"}
+              <strong>Details:</strong>{" "}
+              <span className="break-all">{complaint.details || "None"}</span>
             </p>
 
             {complaint.imageUrl && (

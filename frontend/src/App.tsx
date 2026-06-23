@@ -15,35 +15,56 @@ import LoginAdmin from "./pages/LoginAdmin";
 import Dashboard from "./pages/Dashboard";
 import ConsumerDashboardComplaints from "./pages/ConsumerDashboardComplaints";
 import SellerDashboardComplaints from "./pages/SellerDashboardComplaints";
+import Forbidden from "./pages/Forbidden";
 
 axios.defaults.withCredentials = true;
 
-// Only renders its children if NO seller is logged in.
+// Guest only
 function RequireGuest({ children }: { children: ReactNode }) {
   const { user } = useAuth();
-  if (user) return <Navigate to="/" replace />;
+
+  if (user) {
+    return <Navigate to="/user/seller/complaints" replace />;
+  }
+
   return <>{children}</>;
 }
 
-// Only renders its children if a seller IS logged in.
+// Seller only
 function RequireSeller({ children }: { children: ReactNode }) {
-  const { user } = useAuth();
-  if (!user) return <Navigate to="/login" replace />;
+  const { userCode } = useAuth();
+
+  if (!userCode) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return <>{children}</>;
+}
+
+// Admin only
+function RequireAdmin({ children }: { children: ReactNode }) {
+  const { admin, authChecked } = useAuth();
+
+  if (!authChecked) return null;
+
+  if (!admin) {
+    return <Forbidden />;
+  }
+
   return <>{children}</>;
 }
 
 function AppRoutes() {
   const { setUser, authChecked } = useAuth();
 
-  // Wait for the /me check before rendering route-guarded pages,
-  // otherwise every visitor briefly gets treated as logged out.
   if (!authChecked) {
-    return null; // or a spinner/skeleton if you'd like one
+    return null;
   }
 
   return (
     <>
       <Navbar />
+
       <Routes>
         <Route path="/" element={<Home />} />
 
@@ -55,6 +76,7 @@ function AppRoutes() {
             </RequireGuest>
           }
         />
+
         <Route
           path="/register"
           element={
@@ -77,16 +99,28 @@ function AppRoutes() {
           path="/user/consumer/complaints"
           element={<ComplainConsumer />}
         />
+
         <Route path="/admin/login" element={<LoginAdmin />} />
-        <Route path="/admin/dashboard" element={<Dashboard />} />
+
+        <Route
+          path="/admin/dashboard"
+          element={
+            <RequireAdmin>
+              <Dashboard />
+            </RequireAdmin>
+          }
+        />
+
         <Route
           path="/seller/complaints"
           element={<SellerDashboardComplaints />}
         />
+
         <Route
           path="/consumer/complaints"
           element={<ConsumerDashboardComplaints />}
         />
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

@@ -400,6 +400,34 @@ router.get(
   },
 );
 
+router.get("/admin/me", authenticateToken, async (req, res) => {
+  try {
+    const admin = await prisma.admin.findUnique({
+      where: {
+        id: req.user.id,
+      },
+      select: {
+        id: true,
+        email: true,
+      },
+    });
+
+    if (!admin) {
+      return res.status(401).json({
+        message: "Unauthorized",
+      });
+    }
+
+    res.status(200).json({
+      admin,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Server error",
+    });
+  }
+});
+
 router.get("/me", authenticateToken, async (req: any, res) => {
   try {
     const user = await prisma.sellerUser.findUnique({

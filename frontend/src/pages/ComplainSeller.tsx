@@ -34,7 +34,7 @@ const ISSUES: string[] = [
   "Price break",
   "Short expiration date",
   "Return policy not respected",
-  "Other",
+  "Broken Product",
 ];
 
 const PRODUCTS: Product[] = [
@@ -105,7 +105,7 @@ const reclamationSchema = yup.object({
     .required("Please tell us who you bought it from"),
   image: yup
     .mixed<File>()
-    .notRequired()
+    .required("Image is a required field")
     .test("fileSize", "Image must be 5MB or smaller", (file) =>
       file ? file.size <= MAX_FILE_SIZE : true,
     )
@@ -117,12 +117,10 @@ const reclamationSchema = yup.object({
   details: yup.string().max(500, "Keep it under 500 characters").optional(),
 });
 
-type ReclamationFormValues = yup.InferType<typeof reclamationSchema>;
-type ReclamationFormErrors = Partial<
-  Record<keyof ReclamationFormValues, string>
->;
+type ComplainSellerValues = yup.InferType<typeof reclamationSchema>;
+type ComplainSellerErrors = Partial<Record<keyof ComplainSellerValues, string>>;
 
-export default function ReclamationForm() {
+export default function ComplainSeller() {
   const [selectedIssues, setSelectedIssues] = useState<string[]>([]);
   const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
   const [digits, setDigits] = useState<string[]>(
@@ -131,7 +129,7 @@ export default function ReclamationForm() {
   const [duration, setDuration] = useState<string>("");
   const [distributer, setDistributer] = useState<string>("");
   const [details, setDetails] = useState<string>("");
-  const [errors, setErrors] = useState<ReclamationFormErrors>({});
+  const [errors, setErrors] = useState<ComplainSellerErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -276,9 +274,9 @@ export default function ReclamationForm() {
       setSubmitted(true);
     } catch (err) {
       if (err instanceof yup.ValidationError) {
-        const fieldErrors: ReclamationFormErrors = {};
+        const fieldErrors: ComplainSellerErrors = {};
         err.inner.forEach((validationError) => {
-          const field = validationError.path as keyof ReclamationFormValues;
+          const field = validationError.path as keyof ComplainSellerValues;
           if (field && !fieldErrors[field]) {
             fieldErrors[field] = validationError.message;
           }

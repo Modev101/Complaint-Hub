@@ -36,7 +36,14 @@ const schema = yup
       .required("Email is required")
       .email("Enter a valid email"),
 
-    productImage: yup.mixed<FileList>().required("Product image is required"),
+    productImage: yup
+      .mixed<FileList>()
+      .required("Product image is required")
+      .test(
+        "fileRequired",
+        "Product image is required",
+        (value) => value instanceof FileList && value.length > 0,
+      ),
   })
   .required();
 

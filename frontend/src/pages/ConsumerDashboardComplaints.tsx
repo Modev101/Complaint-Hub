@@ -46,10 +46,10 @@ export default function ConsumerDashboardComplaints() {
     <>
       <div className="flex items-center justify-center space-x-4 my-5">
         <Link to="/admin/dashboard">
-          <ArrowLeft className="animate-bounce size-10" />
+          <ArrowLeft className="animate-bounce lg:size-10 md:size-10" />
         </Link>
 
-        <h1 className="text-red-600 text-4xl font-semibold">
+        <h1 className="text-red-600 lg:text-4xl md:text-4xl font-semibold">
           Seller Dashboard Complaints
         </h1>
       </div>
@@ -68,7 +68,10 @@ export default function ConsumerDashboardComplaints() {
             key={complaint.id}
             className="border p-4 rounded mb-4 flex flex-col items-center justify-center"
           >
-            <h2>{complaint.name}</h2>
+            <h2>
+              <strong>Store Name:</strong>
+              {complaint.name}
+            </h2>
 
             <p>
               <strong>Company:</strong> {complaint.companyName}
@@ -99,7 +102,8 @@ export default function ConsumerDashboardComplaints() {
             </p>
 
             <p>
-              <strong>Complaint:</strong> {complaint.details}
+              <strong>Details:</strong>{" "}
+              <span className="break-all">{complaint.details || "None"}</span>
             </p>
 
             {complaint.imageUrl && (

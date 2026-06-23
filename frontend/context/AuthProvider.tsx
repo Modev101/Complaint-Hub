@@ -1,36 +1,67 @@
 import { useEffect, useState, type ReactNode } from "react";
 import axios from "axios";
-import type { AuthResponse } from "../src/types/index";
+import type { AuthResponse } from "../src/types";
 import { AuthContext } from "./AuthContext";
 
 const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
+type Admin = {
+  id: string;
+  email: string;
+};
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<AuthResponse | null>(null);
+
+  const [admin, setAdmin] = useState<Admin | null>(null);
+
+  const [userCode, setUserCode] = useState<string | null>(null);
+
   const [authChecked, setAuthChecked] = useState(false);
-  const [userCode, setUserCode] = useState<string | null>(null); // ← add this
 
   useEffect(() => {
-    const fetchUser = async () => {
+    const fetchAuth = async () => {
       try {
-        const response = await axios.get(`${apiUrl}/api/auth/me`);
-        setUser(response.data.user);
-        setUserCode(response.data.user.code ?? null); // ← restore code if already logged in
+        const [userRes, adminRes] = await Promise.allSettled([
+          axios.get(`${apiUrl}/api/auth/me`, {
+            withCredentials: true,
+          }),
+
+          axios.get(`${apiUrl}/api/auth/admin/me`, {
+            withCredentials: true,
+          }),
+        ]);
+
+        if (userRes.status === "fulfilled") {
+          setUser(userRes.value.data.user);
+
+          setUserCode(userRes.value.data.user?.code ?? null);
+        }
+
+        if (adminRes.status === "fulfilled") {
+          setAdmin(adminRes.value.data.admin);
+        }
       } catch (error) {
-        console.error("Error fetching user:", error);
-        setUser(null);
-        setUserCode(null);
+        console.error(error);
       } finally {
         setAuthChecked(true);
       }
     };
 
-    fetchUser();
+    fetchAuth();
   }, []);
 
   return (
     <AuthContext.Provider
-      value={{ user, setUser, authChecked, userCode, setUserCode }}
+      value={{
+        user,
+        setUser,
+        admin,
+        setAdmin,
+        userCode,
+        setUserCode,
+        authChecked,
+      }}
     >
       {children}
     </AuthContext.Provider>

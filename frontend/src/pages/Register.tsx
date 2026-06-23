@@ -112,8 +112,8 @@ export default function Register() {
     }
   };
 
-  const [userCode, setLocalUserCode] = useState(""); // ← rename local setter
   const [copied, setCopied] = useState(false);
+  const [userCode, setLocalUserCode] = useState(""); // ← rename local setter
   const [resError, setResError] = useState(false);
 
   const { setUserCode } = useAuth(); // ← auth context setter
@@ -138,7 +138,7 @@ export default function Register() {
   };
   if (userCode) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-[80vh] flex items-center justify-center">
         <div className="bg-white shadow-xl rounded-xl p-8 max-w-md text-center">
           <h2 className="text-3xl font-bold">Welcome aboard!</h2>
 
