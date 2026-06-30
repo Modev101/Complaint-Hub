@@ -16,6 +16,8 @@ import Dashboard from "./pages/Dashboard";
 import ConsumerDashboardComplaints from "./pages/ConsumerDashboardComplaints";
 import SellerDashboardComplaints from "./pages/SellerDashboardComplaints";
 import Forbidden from "./pages/Forbidden";
+import LoginAnalytics from "./pages/LoginAnalytics";
+import AnalyticsDashboard from "./pages/AnalyticsDashboard";
 
 axios.defaults.withCredentials = true;
 
@@ -49,6 +51,30 @@ function RequireAdmin({ children }: { children: ReactNode }) {
 
   if (!admin) {
     return <Forbidden />;
+  }
+
+  return <>{children}</>;
+}
+// Admin login Redirect
+function RedirectAdminDashboard({ children }: { children: ReactNode }) {
+  const { admin, authChecked } = useAuth();
+
+  if (!authChecked) return null;
+
+  if (admin) {
+    return <Navigate to="/admin/dashboard" replace />;
+  }
+
+  return <>{children}</>;
+}
+// Analytics login Redirect
+function RedirectAnalyticsDashboard({ children }: { children: ReactNode }) {
+  const { admin, authChecked } = useAuth();
+
+  if (!authChecked) return null;
+
+  if (admin) {
+    return <Navigate to="/analytics/dashboard" replace />;
   }
 
   return <>{children}</>;
@@ -100,13 +126,37 @@ function AppRoutes() {
           element={<ComplainConsumer />}
         />
 
-        <Route path="/admin/login" element={<LoginAdmin />} />
+        <Route
+          path="/admin/login"
+          element={
+            <RedirectAdminDashboard>
+              <LoginAdmin />
+            </RedirectAdminDashboard>
+          }
+        />
 
         <Route
           path="/admin/dashboard"
           element={
             <RequireAdmin>
               <Dashboard />
+            </RequireAdmin>
+          }
+        />
+
+        <Route
+          path="/analytics/login"
+          element={
+            <RedirectAnalyticsDashboard>
+              <LoginAnalytics />
+            </RedirectAnalyticsDashboard>
+          }
+        />
+        <Route
+          path="/analytics/dashboard"
+          element={
+            <RequireAdmin>
+              <AnalyticsDashboard />
             </RequireAdmin>
           }
         />
