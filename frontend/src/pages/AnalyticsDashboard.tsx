@@ -24,6 +24,8 @@ import {
   Truck,
   Loader2,
   RefreshCw,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
 
 /* ----------------------------- Types ----------------------------- */
@@ -403,6 +405,7 @@ export default function ComplaintsAnalyticsDashboard() {
   );
 
   const [selectedCompany, setSelectedCompany] = useState<string | null>(null);
+  const [expandedId, setExpandedId] = useState<string | null>(null);
 
   // Reset the company filter if it disappears from the current range/data
   useEffect(() => {
@@ -466,7 +469,7 @@ export default function ComplaintsAnalyticsDashboard() {
   if (loading) {
     return (
       <div
-        className="flex min-h-[60vh] flex-col items-center justify-center gap-4"
+        className="flex min-h-[89vh] flex-col items-center justify-center gap-4"
         style={{ background: COLORS.paper }}
       >
         <Loader2
@@ -502,7 +505,6 @@ export default function ComplaintsAnalyticsDashboard() {
       </div>
     );
   }
-
   return (
     <div className="min-h-screen w-full" style={{ background: COLORS.paper }}>
       <div className="mx-auto max-w-6xl px-4 py-6 md:px-6">
@@ -988,6 +990,19 @@ export default function ComplaintsAnalyticsDashboard() {
                       <Tag key={i}>{issue}</Tag>
                     ))}
                   </div>
+                  <div className="my-2">
+                    <button
+                      className="flex gap-1 font-bold cursor-pointer"
+                      onClick={() =>
+                        setExpandedId(expandedId === c.id ? null : c.id)
+                      }
+                    >
+                      View Complaint
+                      {expandedId === c.id ? <ChevronUp /> : <ChevronDown />}
+                    </button>
+
+                    {expandedId === c.id && <p>"{c.details}"</p>}
+                  </div>
                   <div
                     className="mt-1 text-xs"
                     style={{ color: COLORS.inkSoft }}
@@ -1196,6 +1211,19 @@ export default function ComplaintsAnalyticsDashboard() {
                   <div className="mt-1 flex flex-wrap gap-1">
                     <Tag>{c.companyName}</Tag>
                     <Tag>{c.companyProduct}</Tag>
+                  </div>
+                  <div className="my-2">
+                    <button
+                      className="flex gap-1 font-bold cursor-pointer"
+                      onClick={() =>
+                        setExpandedId(expandedId === c.id ? null : c.id)
+                      }
+                    >
+                      View Complaint
+                      {expandedId === c.id ? <ChevronUp /> : <ChevronDown />}
+                    </button>
+
+                    {expandedId === c.id && <p>"{c.details}"</p>}
                   </div>
                   <div
                     className="mt-1 text-xs"
