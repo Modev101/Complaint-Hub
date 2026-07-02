@@ -1,10 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import companies from "../../data/Companies.json";
+import companies from "../data/Companies.json";
 import { SelectForm } from "../components/SelectForm";
 import { useEffect, useState } from "react";
-import States from "../../data/States.json";
+import States from "../data/States.json";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -180,8 +180,8 @@ export default function ComplainProducts() {
   };
   if (submitted) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="bg-white shadow-xl rounded-xl p-8 max-w-md text-center">
+      <div className="min-h-[89vh] flex items-center justify-center">
+        <div className=" shadow-xl rounded-xl p-8 max-w-md text-center bg-card">
           <h2 className="text-3xl font-bold animate-text">Thank You!</h2>
 
           <p className="mt-4 text-gray-600">
@@ -201,7 +201,7 @@ export default function ComplainProducts() {
 
   return (
     <>
-      <div className="min-h-screen my-10 flex flex-col items-center justify-center px-5">
+      <div className="min-h-screen my-10 flex flex-col items-center justify-center px-5 bg-background text-muted">
         <div className="flex flex-col lg:flex-row md:flex-row items-start lg:items-center md:items-center justify-center space-x-5 mb-3">
           <Link to="/" className="text-2xl animate-bounce">
             <FontAwesomeIcon icon={faArrowLeft} />
@@ -210,7 +210,7 @@ export default function ComplainProducts() {
             Complain A Product
           </h1>
         </div>
-        <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-8">
+        <div className="w-full max-w-md bg-card  rounded-xl shadow-lg p-8">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
             <label className="font-medium">
               Company name <span className="text-red-500">*</span>

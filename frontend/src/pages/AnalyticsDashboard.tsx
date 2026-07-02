@@ -153,35 +153,29 @@ function StatCard({
   accent: string;
 }) {
   return (
-    <div
-      className="flex items-center gap-4 rounded-lg border p-4"
-      style={{ borderColor: COLORS.line, background: "#fff" }}
-    >
+    <div className="flex items-center gap-4 rounded-lg border bg-card p-4 ">
       <div
         className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md"
-        style={{ background: accent + "1a", color: accent }}
+        style={{ background: `${accent}1a`, color: accent }}
       >
         <Icon size={20} />
       </div>
+
       <div className="min-w-0">
         <div
-          className="truncate text-2xl font-semibold tracking-tight"
-          style={{ color: COLORS.ink }}
+          className="truncate text-2xl font-semibold tracking-tight text-gray-900 dark:text-white"
           title={String(value)}
         >
           {value}
         </div>
-        <div
-          className="text-xs uppercase tracking-wide"
-          style={{ color: COLORS.inkSoft }}
-        >
+
+        <div className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
           {label}
         </div>
       </div>
     </div>
   );
 }
-
 function ChartCard({
   title,
   subtitle,
@@ -195,19 +189,20 @@ function ChartCard({
 }) {
   return (
     <div
-      className={`rounded-lg border p-5 ${span === 2 ? "md:col-span-2" : ""}`}
-      style={{ borderColor: COLORS.line, background: "#fff" }}
+      className={`rounded-lg border bg-card p-5
+        
+        ${span === 2 ? "md:col-span-2" : ""}`}
     >
       <div className="mb-4">
-        <h3 className="text-sm font-semibold" style={{ color: COLORS.ink }}>
+        <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
           {title}
         </h3>
+
         {subtitle && (
-          <p className="text-xs" style={{ color: COLORS.inkSoft }}>
-            {subtitle}
-          </p>
+          <p className="text-xs text-gray-500 dark:text-gray-400">{subtitle}</p>
         )}
       </div>
+
       {children}
     </div>
   );
@@ -255,25 +250,21 @@ function RecentList<T extends { id: string }>({
   render: (item: T) => React.ReactNode;
 }) {
   return (
-    <div
-      className="rounded-lg border p-5"
-      style={{ borderColor: COLORS.line, background: "#fff" }}
-    >
-      <h3 className="mb-3 text-sm font-semibold" style={{ color: COLORS.ink }}>
-        {title}
-      </h3>
+    <div className="rounded-lg border bg-card p-5 ">
+      <h3 className="mb-3 text-sm font-semibold text-muted">{title}</h3>
+
       <div className="space-y-3">
         {items.map((item) => (
           <div
             key={item.id}
-            className="rounded-md border px-3 py-2.5 transition-colors hover:bg-black/2"
-            style={{ borderColor: COLORS.line }}
+            className="rounded-md border border-gray-200 px-3 py-2.5 transition-colors hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-slate-800"
           >
             {render(item)}
           </div>
         ))}
+
         {items.length === 0 && (
-          <p className="text-sm" style={{ color: COLORS.inkSoft }}>
+          <p className="text-sm text-gray-500 dark:text-gray-400">
             No complaints in this range.
           </p>
         )}
@@ -468,15 +459,8 @@ export default function ComplaintsAnalyticsDashboard() {
 
   if (loading) {
     return (
-      <div
-        className="flex min-h-[89vh] flex-col items-center justify-center gap-4"
-        style={{ background: COLORS.paper }}
-      >
-        <Loader2
-          className="animate-spin"
-          size={40}
-          style={{ color: COLORS.red }}
-        />
+      <div className="flex min-h-[89vh] flex-col items-center justify-center gap-4">
+        <Loader2 className="animate-spin text-destructive" size={40} />
         <p className="text-sm" style={{ color: COLORS.inkSoft }}>
           Loading complaints…
         </p>
@@ -486,10 +470,7 @@ export default function ComplaintsAnalyticsDashboard() {
 
   if (error) {
     return (
-      <div
-        className="flex min-h-[60vh] flex-col items-center justify-center gap-4 px-4 text-center"
-        style={{ background: COLORS.paper }}
-      >
+      <div className="flex min-h-[89vh] flex-col items-center justify-center gap-4 px-4 text-center">
         <AlertTriangle size={36} style={{ color: COLORS.red }} />
         <p className="font-medium" style={{ color: COLORS.ink }}>
           {error}
@@ -506,25 +487,19 @@ export default function ComplaintsAnalyticsDashboard() {
     );
   }
   return (
-    <div className="min-h-screen w-full" style={{ background: COLORS.paper }}>
-      <div className="mx-auto max-w-6xl px-4 py-6 md:px-6">
+    <div className="min-h-screen w-full text-muted">
+      <div className="mx-auto max-w-6xl  px-4 py-6 md:px-6">
         {/* Header */}
         <div
-          className="mb-6 flex flex-col gap-4 border-b pb-5 md:flex-row md:items-end md:justify-between"
+          className="mb-6 flex flex-col  gap-4 border-b pb-5 md:flex-row md:items-end md:justify-between"
           style={{ borderColor: COLORS.line }}
         >
           <div>
-            <div
-              className="mb-1 flex items-center gap-2 text-xs font-medium uppercase tracking-widest"
-              style={{ color: COLORS.red }}
-            >
+            <div className="mb-1 flex items-center text-destructive gap-2 text-xs font-medium uppercase tracking-widest">
               <AlertTriangle size={14} />
               Trust &amp; Safety
             </div>
-            <h1
-              className="text-2xl font-semibold tracking-tight md:text-3xl"
-              style={{ color: COLORS.ink }}
-            >
+            <h1 className="text-2xl font-semibold tracking-tight md:text-3xl">
               Complaints Analytics
             </h1>
             <p className="mt-1 text-sm" style={{ color: COLORS.inkSoft }}>
@@ -533,15 +508,12 @@ export default function ComplaintsAnalyticsDashboard() {
           </div>
 
           <div className="flex items-center gap-2">
-            <div
-              className="flex items-center gap-1 rounded-md border p-1"
-              style={{ borderColor: COLORS.line, background: "#fff" }}
-            >
+            <div className="flex  items-center gap-1 rounded-md border p-1">
               {RANGE_OPTIONS.map((opt) => (
                 <button
                   key={opt.label}
                   onClick={() => setRange(opt.value)}
-                  className="cursor-pointer rounded px-3 py-1.5 text-xs font-medium transition-colors"
+                  className="cursor-pointer  rounded px-3 py-1.5 text-xs font-medium transition-colors"
                   style={{
                     background:
                       range === opt.value ? COLORS.red : "transparent",
@@ -558,7 +530,6 @@ export default function ComplaintsAnalyticsDashboard() {
               className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-md border"
               style={{
                 borderColor: COLORS.line,
-                background: "#fff",
                 color: COLORS.inkSoft,
               }}
             >
@@ -576,8 +547,7 @@ export default function ComplaintsAnalyticsDashboard() {
             <button
               key={t.id}
               onClick={() => setTab(t.id)}
-              className="relative cursor-pointer pb-3 text-sm font-medium transition-colors"
-              style={{ color: tab === t.id ? COLORS.ink : COLORS.inkSoft }}
+              className="relative cursor-pointer pb-3 text-sm font-medium transition-colors text-[#6b6358]"
             >
               {t.label}
               {tab === t.id && (
@@ -593,7 +563,7 @@ export default function ComplaintsAnalyticsDashboard() {
         {/* OVERVIEW TAB */}
         {tab === "overview" && (
           <div className="space-y-6">
-            <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+            <div className="grid grid-cols-2  gap-4 md:grid-cols-4 ">
               <StatCard
                 icon={AlertTriangle}
                 label="Total Complaints"
@@ -681,7 +651,7 @@ export default function ComplaintsAnalyticsDashboard() {
                     <YAxis
                       dataKey="name"
                       type="category"
-                      tick={{ fontSize: 12, fill: COLORS.ink }}
+                      tick={{ fontSize: 12, fill: COLORS.inkSoft }}
                       axisLine={false}
                       tickLine={false}
                       width={80}
@@ -715,7 +685,7 @@ export default function ComplaintsAnalyticsDashboard() {
                     <YAxis
                       dataKey="name"
                       type="category"
-                      tick={{ fontSize: 12, fill: COLORS.ink }}
+                      tick={{ fontSize: 12, fill: COLORS.inkSoft }}
                       axisLine={false}
                       tickLine={false}
                       width={80}
@@ -921,7 +891,7 @@ export default function ComplaintsAnalyticsDashboard() {
                     <YAxis
                       dataKey="name"
                       type="category"
-                      tick={{ fontSize: 12, fill: COLORS.ink }}
+                      tick={{ fontSize: 12, fill: COLORS.inkSoft }}
                       axisLine={false}
                       tickLine={false}
                       width={90}
@@ -955,7 +925,7 @@ export default function ComplaintsAnalyticsDashboard() {
                     <YAxis
                       dataKey="name"
                       type="category"
-                      tick={{ fontSize: 12, fill: COLORS.ink }}
+                      tick={{ fontSize: 12, fill: COLORS.inkSoft }}
                       axisLine={false}
                       tickLine={false}
                       width={100}
@@ -978,7 +948,7 @@ export default function ComplaintsAnalyticsDashboard() {
               render={(c) => (
                 <>
                   <div className="flex items-center justify-between">
-                    <span className="font-medium" style={{ color: COLORS.ink }}>
+                    <span className="font-medium">
                       {c.user.storeName}
                     </span>
                     <span className="text-xs" style={{ color: COLORS.inkSoft }}>
@@ -992,7 +962,7 @@ export default function ComplaintsAnalyticsDashboard() {
                   </div>
                   <div className="my-2">
                     <button
-                      className="flex gap-1 font-bold cursor-pointer"
+                      className="flex gap-1 font-bold cursor-pointer text-muted"
                       onClick={() =>
                         setExpandedId(expandedId === c.id ? null : c.id)
                       }
@@ -1001,7 +971,9 @@ export default function ComplaintsAnalyticsDashboard() {
                       {expandedId === c.id ? <ChevronUp /> : <ChevronDown />}
                     </button>
 
-                    {expandedId === c.id && <p>"{c.details}"</p>}
+                    {expandedId === c.id && (
+                      <p className="text-muted">"{c.details}"</p>
+                    )}
                   </div>
                   <div
                     className="mt-1 text-xs"
@@ -1201,7 +1173,7 @@ export default function ComplaintsAnalyticsDashboard() {
               render={(c) => (
                 <>
                   <div className="flex items-center justify-between">
-                    <span className="font-medium" style={{ color: COLORS.ink }}>
+                    <span className="font-medium">
                       {c.name}
                     </span>
                     <span className="text-xs" style={{ color: COLORS.inkSoft }}>
@@ -1214,7 +1186,7 @@ export default function ComplaintsAnalyticsDashboard() {
                   </div>
                   <div className="my-2">
                     <button
-                      className="flex gap-1 font-bold cursor-pointer"
+                      className="flex gap-1 font-bold cursor-pointer text-muted"
                       onClick={() =>
                         setExpandedId(expandedId === c.id ? null : c.id)
                       }
@@ -1223,7 +1195,9 @@ export default function ComplaintsAnalyticsDashboard() {
                       {expandedId === c.id ? <ChevronUp /> : <ChevronDown />}
                     </button>
 
-                    {expandedId === c.id && <p>"{c.details}"</p>}
+                    {expandedId === c.id && (
+                      <p className="text-muted">"{c.details}"</p>
+                    )}
                   </div>
                   <div
                     className="mt-1 text-xs"

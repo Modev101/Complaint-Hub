@@ -1,6 +1,6 @@
 import { useEffect, useState, type ReactNode } from "react";
 import axios from "axios";
-import type { AuthResponse } from "../src/types";
+import type { AuthResponse } from "../types";
 import { AuthContext } from "./AuthContext";
 
 const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
@@ -32,13 +32,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           }),
         ]);
 
-        if (userRes.status === "fulfilled") {
-          setUser(userRes.value.data.user);
+        if (userRes?.status === "fulfilled") {
+          setUser(userRes?.value.data.user);
 
-          setUserCode(userRes.value.data.user?.code ?? null);
+          setUserCode(userRes?.value.data.user?.code ?? null);
         }
 
-        if (adminRes.status === "fulfilled") {
+        if (adminRes?.status === "fulfilled") {
           setAdmin(adminRes.value.data.admin);
         }
       } catch (error) {

@@ -5,7 +5,7 @@ export default function Forbidden() {
     <div className="min-h-[80vh] flex flex-col items-center justify-center px-4 text-center">
       <h1 className="text-7xl font-bold text-red-600">403</h1>
 
-      <h2 className="mt-4 text-2xl font-semibold">Access Forbidden</h2>
+      <h2 className="mt-4 text-2xl font-semibold text-muted">Access Forbidden</h2>
 
       <p className="mt-2 text-gray-600 max-w-md">
         You don't have permission to access this page.

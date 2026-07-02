@@ -5,9 +5,9 @@ import { Check, Copy, Loader2 } from "lucide-react";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import States from "../../data/States.json";
+import States from "../data/States.json";
 import { SelectForm } from "../components/SelectForm";
-import { useAuth } from "../../context/useAuth";
+import { useAuth } from "../context/useAuth";
 
 const schema = yup.object({
   state: yup.string().required("State is required"),
@@ -178,7 +178,7 @@ export default function Register() {
         </div>
       ) : (
         <div className="min-h-screen my-10 max-w-3xl mx-auto px-4">
-          <div className="bg-white rounded-2xl shadow-lg p-5">
+          <div className="bg-card text-muted rounded-2xl shadow-lg p-5">
             <h1 className="text-3xl font-bold text-center text-red-600">
               Create Account
             </h1>
@@ -190,7 +190,9 @@ export default function Register() {
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
               {/* Store Name */}
               <div>
-                <label className="block mb-2 font-medium">Store Name</label>
+                <label className="block mb-2 font-medium">
+                  Store Name <span className="text-red-500">*</span>
+                </label>
 
                 <input
                   {...register("storeName")}
@@ -206,7 +208,9 @@ export default function Register() {
 
               {/* Phone */}
               <div>
-                <label className="block mb-2 font-medium">Phone Number</label>
+                <label className="block mb-2 font-medium">
+                  Phone Number <span className="text-red-500">*</span>
+                </label>
 
                 <input
                   {...register("phoneNumber")}
@@ -222,7 +226,9 @@ export default function Register() {
 
               {/* State */}
               <div>
-                <label className="font-medium">State</label>
+                <label className="font-medium">
+                  State <span className="text-red-500">*</span>
+                </label>
 
                 <SelectForm
                   options={stateOptions}
@@ -244,7 +250,9 @@ export default function Register() {
 
               {/* County */}
               <div>
-                <label className="font-medium">County</label>
+                <label className="font-medium">
+                  County <span className="text-red-500">*</span>
+                </label>
 
                 <SelectForm
                   options={countyOptions}
@@ -265,7 +273,9 @@ export default function Register() {
 
               {/* Town */}
               <div>
-                <label className="font-medium">Town</label>
+                <label className="font-medium">
+                  Town <span className="text-red-500">*</span>
+                </label>
 
                 <SelectForm
                   options={townOptions}
@@ -284,7 +294,9 @@ export default function Register() {
 
               {/* Platform */}
               <div>
-                <label className="font-medium">Your Platform</label>
+                <label className="font-medium">
+                  Your Platform <span className="text-red-500">*</span>
+                </label>
 
                 <SelectForm
                   options={DISTRIBUTER}

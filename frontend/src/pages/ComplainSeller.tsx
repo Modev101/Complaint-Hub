@@ -296,11 +296,11 @@ export default function ComplainSeller() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-stone-100 py-12 px-4">
+    <div className="w-full py-12 px-4">
       <div className="mx-auto max-w-xl">
         {submitted ? (
-          <div className="min-h-screen flex items-center justify-center">
-            <div className="bg-white shadow-xl rounded-xl p-8 max-w-md text-center">
+          <div className="flex min-h-[70vh] items-center justify-center">
+            <div className="bg-card shadow-xl rounded-xl p-8 max-w-md text-center">
               <h2 className="text-3xl font-bold animate-text">Thank You!</h2>
 
               <p className="mt-4 text-gray-600">
@@ -318,7 +318,7 @@ export default function ComplainSeller() {
           </div>
         ) : (
           <>
-            <div className="flex flex-col lg:flex-row md:flex-row items-start lg:items-center md:items-center justify-center space-x-5 mb-3">
+            <div className="text-muted flex flex-col lg:flex-row md:flex-row items-start lg:items-center md:items-center justify-center space-x-5 mb-3">
               <Link to="/" className="text-2xl animate-bounce">
                 <FontAwesomeIcon icon={faArrowLeft} />
               </Link>
@@ -328,11 +328,11 @@ export default function ComplainSeller() {
             </div>
             <form
               onSubmit={handleSubmit}
-              className="bg-white border border-stone-200 rounded-2xl p-8 space-y-8"
+              className="bg-card text-muted border border-stone-200 rounded-2xl p-8 space-y-8"
             >
               {/* Issues */}
               <fieldset>
-                <legend className="text-sm font-semibold text-stone-900 mb-1">
+                <legend className="text-sm font-semibold mb-1">
                   What's the issue?
                 </legend>
                 <p className="text-xs text-stone-500 mb-1">
@@ -410,7 +410,7 @@ export default function ComplainSeller() {
                   <div className="border-t border-dashed border-stone-200 pt-6 space-y-6">
                     {/* Product picker — boxes like the issues */}
                     <div>
-                      <label className="block text-sm font-semibold text-stone-900 mb-2">
+                      <label className="block text-sm font-semibold mb-2">
                         Which product is this about?
                       </label>
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
@@ -456,7 +456,7 @@ export default function ComplainSeller() {
                       <button
                         type="button"
                         onClick={selectAllProducts}
-                        className="mt-2 text-sm font-medium text-red-700 hover:text-red-900 border border-red-200 hover:border-red-400 bg-red-50 rounded-lg px-3 py-1.5 transition-colors"
+                        className="cursor-pointer mt-2 text-sm font-medium text-red-700 hover:text-red-900 border border-red-200 hover:border-red-400 bg-red-50 rounded-lg px-3 py-1.5 transition-colors"
                       >
                         {allProductsSelected
                           ? "Unselect all products"
@@ -475,7 +475,7 @@ export default function ComplainSeller() {
                     {/* Barcode — only once a product is selected */}
                     {selectedProducts.length == 0 && (
                       <div>
-                        <label className="block text-sm font-semibold text-stone-900 mb-2">
+                        <label className="block text-sm font-semibold mb-2">
                           Product barcode
                         </label>
                         <div className="flex gap-2">
@@ -495,8 +495,8 @@ export default function ComplainSeller() {
                               }
                               onPaste={handleDigitPaste}
                               aria-label={`Barcode digit ${idx + 1}`}
-                              className={`aspect-square w-full text-center font-mono text-lg font-semibold rounded-lg border outline-none transition-colors
-                            ${d ? "border-red-600 bg-white" : "border-stone-300 bg-stone-50"}
+                              className={`aspect-square w-full text-center bg-input  font-mono text-lg font-semibold rounded-lg border outline-none transition-colors
+                            ${d ? "border-red-600 " : "border-stone-300"}
                             ${errors.barcode ? "border-red-600" : ""}
                             focus:border-red-600 focus:ring-2 focus:ring-red-100
                           `}
@@ -518,7 +518,7 @@ export default function ComplainSeller() {
                     <div>
                       <label
                         htmlFor="duration"
-                        className="block text-sm font-semibold text-stone-900 mb-2"
+                        className="block text-sm font-semibold  mb-2"
                       >
                         How long have you had this product?
                       </label>
@@ -551,7 +551,7 @@ export default function ComplainSeller() {
               {/* Contact details */}
               <fieldset className="space-y-4">
                 <div>
-                  <legend className="text-sm font-semibold text-stone-900 mb-1">
+                  <legend className="text-sm font-semibold  mb-1">
                     From whom did you buy the product?
                   </legend>
                 </div>
@@ -618,7 +618,7 @@ export default function ComplainSeller() {
                     }}
                     placeholder="Anything else we should know?"
                     rows={3}
-                    className={`w-full rounded-lg border bg-stone-50 text-sm px-3 py-2.5 outline-none resize-y focus:border-red-600 focus:ring-2 focus:ring-red-100 ${
+                    className={`w-full rounded-lg border bg-input text-sm px-3 py-2.5 outline-none resize-y focus:border-red-600 focus:ring-2 focus:ring-red-100 ${
                       errors.details ? "border-red-600" : "border-stone-300"
                     }`}
                   />

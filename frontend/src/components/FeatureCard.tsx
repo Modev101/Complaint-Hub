@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from "../../context/useAuth";
+import { useAuth } from "../context/useAuth";
+import Complaint_Service from "../assets/images/photo-1454165804606-c3d57bc86b40.jpg";
 
 export default function FeatureCard() {
   const [clicked, setClicked] = useState(false);
@@ -8,9 +9,9 @@ export default function FeatureCard() {
 
   return (
     <>
-      <section className="max-w-7xl lg:h-[80vh] mx-auto px-6 py-20 flex flex-col lg:flex-row items-center">
+      <section className="max-w-7xl lg:h-[80vh] mx-auto px-6 py-20 flex flex-col lg:flex-row items-center text-muted">
         <div className="flex-1">
-          <span className="bg-red-100 text-red-600 px-4 py-1 rounded-full text-sm flex items-center justify-center lg:inline-block">
+          <span className="dark:bg-muted bg-red-100 text-red-600 px-4 py-1 rounded-full text-sm flex items-center justify-center lg:inline-block">
             Complaint Management Platform
           </span>
 
@@ -55,7 +56,7 @@ export default function FeatureCard() {
 
         <div className="flex-1 mt-12 lg:mt-0 flex justify-center">
           <img
-            src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=700"
+            src={Complaint_Service}
             alt="Complaint Service"
             className="rounded-2xl shadow-xl"
           />

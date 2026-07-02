@@ -47,7 +47,7 @@ export default function ConsumerDashboardComplaints() {
 
   return (
     <>
-      <div className="flex items-center justify-center space-x-4 my-5">
+      <div className="flex items-center justify-center space-x-4 my-5 text-muted">
         <Link to="/admin/dashboard">
           <ArrowLeft className="animate-bounce lg:size-10 md:size-10" />
         </Link>
@@ -69,7 +69,7 @@ export default function ConsumerDashboardComplaints() {
         complaints.map((complaint: Complaint) => (
           <div
             key={complaint.id}
-            className="border p-4 rounded mb-4 flex flex-col items-center justify-center"
+            className="border p-4 rounded mb-4 flex flex-col items-center justify-center text-muted"
           >
             <h2>
               <strong>Store Name:</strong> {complaint.user.storeName}

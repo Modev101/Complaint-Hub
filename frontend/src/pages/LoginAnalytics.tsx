@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useAuth } from "../../context/useAuth";
+import { useAuth } from "../context/useAuth";
 import { ChartAreaIcon, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -63,7 +63,7 @@ export default function LoginAdmin() {
       ) : (
         <>
           <div className="lg:h-[80vh] my-5 flex items-center justify-center px-5">
-            <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-8">
+            <div className="w-full max-w-md bg-card text-muted rounded-xl shadow-lg p-8">
               <div className="flex flex-col items-center justify-center space-y-4">
                 <ChartAreaIcon className="text-red-500 size-10" />
                 <p className="text-center text-gray-500 mb-8">

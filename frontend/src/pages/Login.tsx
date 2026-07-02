@@ -1,4 +1,4 @@
-import { useAuth } from "../../context/useAuth.ts";
+import { useAuth } from "../context/useAuth.ts";
 import type { AuthResponse } from "../types/index.ts";
 import axios from "axios";
 import { Loader2 } from "lucide-react";
@@ -57,7 +57,7 @@ export default function Login({
       ) : (
         <>
           <div className="lg:min-h-[80vh] min-h-[85vh] flex items-center justify-center px-5">
-            <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-8">
+            <div className="w-full max-w-md bg-card text-muted rounded-xl shadow-lg p-8">
               <p className="text-center text-gray-500 mb-8">
                 Login to your account
               </p>

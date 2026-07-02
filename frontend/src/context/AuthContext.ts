@@ -1,6 +1,6 @@
 import { createContext, type Dispatch, type SetStateAction } from "react";
 
-import type { AuthResponse } from "../src/types";
+import type { AuthResponse } from "../types";
 
 type Admin = {
   id: string;
