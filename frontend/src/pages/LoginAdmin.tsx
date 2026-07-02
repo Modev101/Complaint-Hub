@@ -3,12 +3,13 @@ import { useAuth } from "../context/useAuth";
 import { Loader2, ShieldAlertIcon } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { FiEye, FiEyeOff } from "react-icons/fi";
 export default function LoginAdmin() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (
@@ -98,16 +99,34 @@ export default function LoginAdmin() {
                     Password <span className="text-red-500">*</span>
                   </label>
 
-                  <input
-                    id="password"
-                    type="password"
-                    name="password"
-                    placeholder="Enter your password"
-                    className="w-full mt-2 border rounded-lg px-4 py-3 outline-none focus:ring-2 focus:ring-red-500"
-                    value={formData.password}
-                    onChange={handleChange}
-                    required
-                  />
+                  <div className="relative mt-2">
+                    <input
+                      id="password"
+                      type={showPassword ? "text" : "password"}
+                      name="password"
+                      placeholder="Enter your password"
+                      className="w-full border rounded-lg px-4 py-3 pr-12 outline-none focus:ring-2 focus:ring-red-500"
+                      value={formData.password}
+                      onChange={handleChange}
+                      required
+                    />
+
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword((prev) => !prev)}
+                      className="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-gray-700"
+                      aria-label={
+                        showPassword ? "Hide password" : "Show password"
+                      }
+                    >
+                      {showPassword ? (
+                        <FiEyeOff size={20} />
+                      ) : (
+                        <FiEye size={20} />
+                      )}
+                    </button>
+                  </div>
+
                   {resError && (
                     <p className="pl-4 italic text-sm text-red-500 font-semibold">
                       {resError}
